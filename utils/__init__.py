@@ -57,7 +57,7 @@ def prepare_dirs(config, hparams):
         setattr(hparams, "num_speakers", len(config.datasets))
 
         save_hparams(config.model_dir, hparams)
-        copy_file("hparams.py", os.path.join(config.model_dir, "hparams.py"))
+        copy_file("/content/Tacotron2-Wavenet-Korean-TTS/hparams.py", os.path.join(config.model_dir, "hparams.py"))
 
 def save(saver, sess, logdir, step):
     model_name = 'model.ckpt'
@@ -125,7 +125,7 @@ def validate_directories(args,hparams):
         logdir = get_default_logdir(logdir_root)
         print('Using default logdir: {}'.format(logdir))
         save_hparams(logdir, hparams)
-        copy_file("hparams.py", os.path.join(logdir, "hparams.py"))
+        copy_file("/content/Tacotron2-Wavenet-Korean-TTS/hparams.py", os.path.join(logdir, "hparams.py"))
     else:
         load_hparams(hparams, logdir)
         
