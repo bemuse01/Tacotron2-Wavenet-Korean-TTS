@@ -4,7 +4,7 @@ python preprocess.py --num_workers 10 --name son --in_dir D:\hccho\multi-speaker
 python preprocess.py --num_workers 10 --name moon --in_dir D:\hccho\multi-speaker-tacotron-tensorflow-master\datasets\moon --out_dir .\data\moon
  ==> out_dir에  'audio', 'mel', 'linear', 'time_steps', 'mel_frames', 'text', 'tokens', 'loss_coeff'를 묶은 npz파일이 생성된다.
  
- 
+for Google colab (2021.08.04)
  
 """
 import argparse
@@ -16,9 +16,9 @@ from hparams import hparams, hparams_debug_string
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
-def preprocess(mod, in_dir, out_root,num_workers):
+def preprocess(mod, in_dir, out_root, num_workers, name):
     os.makedirs(out_dir, exist_ok=True)
-    metadata = mod.build_from_path(hparams, in_dir, out_dir,num_workers=num_workers, tqdm=tqdm)
+    metadata = mod.build_from_path(hparams, in_dir, out_dir,num_workers=num_workers, tqdm=tqdm, name=name)
     write_metadata(metadata, out_dir)
 
 
@@ -56,6 +56,5 @@ if __name__ == "__main__":
 
     print("Sampling frequency: {}".format(hparams.sample_rate))
 
-    assert name in ["cmu_arctic", "ljspeech", "son", "moon"]
-    mod = importlib.import_module('datasets.{}'.format(name))
-    preprocess(mod, in_dir, out_dir, num_workers)
+    mod = importlib.import_module('datasets.build')
+    preprocess(mod, in_dir, out_dir, num_workers, name)
